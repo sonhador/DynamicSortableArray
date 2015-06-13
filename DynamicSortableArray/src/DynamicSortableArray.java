@@ -96,7 +96,6 @@ public class DynamicSortableArray<T extends Comparable<T>> {
 		}
 		
 		public T get() throws InstantiationException, IllegalAccessException {
-			
 			int partitionNum = getPartition(idx);
 
 			if (partitions.size() <= partitionNum) {
