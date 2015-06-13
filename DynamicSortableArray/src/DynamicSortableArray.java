@@ -42,7 +42,7 @@ public class DynamicSortableArray<T extends Comparable<T>> {
 		return partitionManager.get();
 	}
 	
-	public T get(long idx) {
+	public T get(long idx) throws InstantiationException, IllegalAccessException {
 		return partitionManager.get(idx);
 	}
 	
@@ -85,14 +85,18 @@ public class DynamicSortableArray<T extends Comparable<T>> {
 			return (int)idx % size;
 		}
 		
-		public T get(long idx) {
+		public T get(long idx) throws InstantiationException, IllegalAccessException {
 			int partitionNum = getPartition(idx);
 			
-			if (partitions.size() > partitionNum) {
-				return partitions.get(partitionNum).get(getIdx(idx));
-			} else {
-				throw new RuntimeException("Range out of bound!!");
+			if (partitions.size() <= partitionNum) {
+				int partitionIncrAmnt = (partitionNum - partitions.size() + 1)*3/2;
+				
+				for (int i=0; i<partitionIncrAmnt; i++) {
+					partitions.add(new Partition<T>(size, objClass));
+				}
 			}
+			
+			return partitions.get(partitionNum).get(getIdx(idx));
 		}
 		
 		public T get() throws InstantiationException, IllegalAccessException {
