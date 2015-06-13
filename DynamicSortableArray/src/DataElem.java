@@ -23,7 +23,7 @@
  *******************************************************************************/
 import java.util.Random;
 
-public class DataElem implements Comparable<DataElem>, Cloneable {
+public class DataElem implements Comparable<DataElem> {
 	private String uuid1 = "";
 	private String uuid2 = "";
 	private String uuid3 = "";
@@ -117,10 +117,5 @@ public class DataElem implements Comparable<DataElem>, Cloneable {
 	
 	public String toString() {
 		return uuid1 + ":" + uuid2 + ":" + uuid3 + ":" + uuid4 + ":" + uuid5;
-	}
-	
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		return super.clone();
 	}
 }
