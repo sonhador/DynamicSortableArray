@@ -32,13 +32,11 @@ import java.util.function.IntFunction;
 public class DynamicSortableArray<T extends Comparable<T>> {
 	private int size;
 	private Class<T> objClass;
-	private Comparator<T> comparator;
 	private PartitionManager<T> partitionManager;
 	
-	public DynamicSortableArray(int size, Class<T> objClass, Comparator<T> comparator) throws InstantiationException, IllegalAccessException {
+	public DynamicSortableArray(int size, Class<T> objClass) throws InstantiationException, IllegalAccessException {
 		this.size = size;
 		this.objClass = objClass;
-		this.comparator = comparator;
 		partitionManager = new PartitionManager<T>(size, objClass);
 	}
 	
@@ -70,7 +68,7 @@ public class DynamicSortableArray<T extends Comparable<T>> {
 			partitionManager.initIdx();
 		}
 		
-		Arrays.parallelSort(totalArr, comparator);
+		Arrays.parallelSort(totalArr, new DataElemComparator<T>());
 		
 		return totalArr;
 	}
@@ -180,6 +178,14 @@ public class DynamicSortableArray<T extends Comparable<T>> {
 		
 		public T[] getArr() {
 			return arr;
+		}
+	}
+	
+	private class DataElemComparator<T extends Comparable<T>> implements Comparator<T> {
+
+		@Override
+		public int compare(T o1, T o2) {
+			return o1.compareTo(o2);
 		}
 	}
 }

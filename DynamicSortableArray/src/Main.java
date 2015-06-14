@@ -57,7 +57,7 @@ public class Main {
 		start = System.currentTimeMillis();
 		
 		DynamicSortableArray<DataElem> arr = 
-				new DynamicSortableArray<DataElem>(20, DataElem.class, new DataElemComparator<DataElem>());
+				new DynamicSortableArray<DataElem>(20, DataElem.class);
 		
 		for (int i=0; i<SIZE; i++) {
 			arr.get().init();
