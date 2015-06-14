@@ -102,21 +102,7 @@ public class DynamicSortableArray<T extends Comparable<T>> {
 			return (int)idx % size;
 		}
 		
-		public T get(long idx) throws InstantiationException, IllegalAccessException {
-			int partitionNum = getPartition(idx);
-			
-			if (partitions.size() <= partitionNum) {
-				int partitionIncrAmnt = (partitionNum - partitions.size() + 1)*3/2;
-				
-				for (int i=0; i<partitionIncrAmnt; i++) {
-					partitions.add(new Partition<T>(size, objClass));
-				}
-			}
-			
-			return partitions.get(partitionNum).get(getIdx(idx));
-		}
-		
-		public T get() throws InstantiationException, IllegalAccessException {
+		private void increasePartitionAsNecessary(long idx) throws InstantiationException, IllegalAccessException {
 			int partitionNum = getPartition(idx);
 			int partitionCnt = partitions.size();
 
@@ -131,10 +117,18 @@ public class DynamicSortableArray<T extends Comparable<T>> {
 					partitions.add(new Partition<T>(size, objClass));
 				}
 			}
-
-			idx++;
+		}
+		
+		public T get(long idx) throws InstantiationException, IllegalAccessException {
+			increasePartitionAsNecessary(idx);
 			
-			return partitions.get(partitionNum).get();
+			return partitions.get(getPartition(idx)).get(getIdx(idx));
+		}
+		
+		public T get() throws InstantiationException, IllegalAccessException {
+			increasePartitionAsNecessary(this.idx);
+
+			return partitions.get(getPartition(this.idx++)).get();
 		}
 		
 		public List<Partition<T>> getPartitions() {

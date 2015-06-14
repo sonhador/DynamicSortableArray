@@ -40,22 +40,17 @@ public class Main {
 		}
 		
 		long end = System.currentTimeMillis();
-		
 		long rawAdditionScore = end - start;
-
 		System.out.println("Raw addition: " + rawAdditionScore);
 		
 		start = System.currentTimeMillis();
-		
 		list.sort(new DataElemComparator<DataElem>());
-		
 		end = System.currentTimeMillis();
-		
 		long rawSortScore = end - start;
 
 		System.out.println("Raw sort: " + rawSortScore);
-		
-		System.out.println("Raw Total: " + (rawAdditionScore + rawSortScore) + "\n");
+		System.out.println("Raw Total: " + (rawAdditionScore + rawSortScore));
+		System.out.println();
 		
 		/////////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -69,22 +64,17 @@ public class Main {
 		}
 		
 		end = System.currentTimeMillis();
-		
 		long dynamicAdditionScore = end - start;
-		
 		System.out.println("Dynamic addition(1st round): " + dynamicAdditionScore);
 		
 		start = System.currentTimeMillis();
-		
 		DataElem []sorted = arr.sort(true);
-		
 		end = System.currentTimeMillis();
-		
 		long dynamicSortScore = end - start;
 		
 		System.out.println("Dynamic sort(1st round): " + dynamicSortScore);
-		
-		System.out.println("Dynamic Total(1st round): " + (dynamicAdditionScore + dynamicSortScore) + "\n");
+		System.out.println("Dynamic Total(1st round): " + (dynamicAdditionScore + dynamicSortScore));
+		System.out.println();
 		
 		start = System.currentTimeMillis();
 		
@@ -93,40 +83,31 @@ public class Main {
 		}
 		
 		end = System.currentTimeMillis();
-		
 		dynamicAdditionScore = end - start;
-		
 		System.out.println("Dynamic addition(2nd round): " + dynamicAdditionScore);
 		
 		start = System.currentTimeMillis();
-		
 		sorted = arr.sort(true);
-		
 		end = System.currentTimeMillis();
-		
 		dynamicSortScore = end - start;
 		
 		System.out.println("Dynamic sort(2nd round): " + dynamicSortScore);
+		System.out.println("Dynamic Total(2nd round): " + (dynamicAdditionScore + dynamicSortScore));
+		System.out.println();
 		
-		System.out.println("Dynamic Total(2nd round): " + (dynamicAdditionScore + dynamicSortScore) + "\n");
-		
-//		String prev = "";
-//		for (int i=0; i<SIZE; i++) {
-//			if (prev.equals(list.get(i).toString()) == false) {
-//				System.out.println(i + ", " + list.get(i).toString());
-//			}
-//			prev = list.get(i).toString();
-//		}
-//		
-		String prev = "";
-		for (int i=0; i<SIZE+10; i++) {
-			if (prev.equals(sorted[i].toString()) == false) {
-				if (i % (SIZE / 20) == 0) {
-					System.out.println(i + ", " + sorted[i].toString());
-				}
+		System.out.println("Raw, Sort Output Sampling:");
+		for (int i=0; i<SIZE; i++) {
+			if (i % (SIZE / 20) == 0) {
+				System.out.println(i + ", " + sorted[i].toString());
 			}
-			prev = sorted[i].toString();
-//			System.out.println(i + ", " + sorted[i].toString());
+		}
+
+		System.out.println();
+		System.out.println("Dynamic, Sort Output Sampling:");
+		for (int i=0; i<SIZE+10; i++) {
+			if (i % (SIZE / 20) == 0) {
+				System.out.println(i + ", " + sorted[i].toString());
+			}
 		}
 	}
 }
