@@ -66,6 +66,10 @@ public class DynamicSortableArray<T extends Comparable<T>> {
 			idx++;
 		}
 		
+		if (withClear) {
+			partitionManager.initIdx();
+		}
+		
 		Arrays.parallelSort(totalArr, comparator);
 		
 		return totalArr;
@@ -114,9 +118,14 @@ public class DynamicSortableArray<T extends Comparable<T>> {
 		
 		public T get() throws InstantiationException, IllegalAccessException {
 			int partitionNum = getPartition(idx);
+			int partitionCnt = partitions.size();
 
-			if (partitions.size() <= partitionNum) {
-				int partitionIncrAmnt = partitions.size()*3/2;
+			if (partitionCnt == 0 || partitionCnt <= partitionNum) {
+				if (partitionCnt == 0) {
+					partitionCnt = 1;
+				}
+				
+				int partitionIncrAmnt = partitionCnt*3/2;
 				
 				for (int i=0; i<partitionIncrAmnt; i++) {
 					partitions.add(new Partition<T>(size, objClass));
@@ -130,6 +139,10 @@ public class DynamicSortableArray<T extends Comparable<T>> {
 		
 		public List<Partition<T>> getPartitions() {
 			return partitions;
+		}
+		
+		public void initIdx() {
+			idx = 0;
 		}
 	}
 

@@ -55,7 +55,7 @@ public class Main {
 
 		System.out.println("Raw sort: " + rawSortScore);
 		
-		System.out.println("Raw Total: " + (rawAdditionScore + rawSortScore));
+		System.out.println("Raw Total: " + (rawAdditionScore + rawSortScore) + "\n");
 		
 		/////////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -72,7 +72,7 @@ public class Main {
 		
 		long dynamicAdditionScore = end - start;
 		
-		System.out.println("Dynamic addition: " + dynamicAdditionScore);
+		System.out.println("Dynamic addition(1st round): " + dynamicAdditionScore);
 		
 		start = System.currentTimeMillis();
 		
@@ -82,9 +82,33 @@ public class Main {
 		
 		long dynamicSortScore = end - start;
 		
-		System.out.println("Dynamic sort: " + dynamicSortScore);
+		System.out.println("Dynamic sort(1st round): " + dynamicSortScore);
 		
-		System.out.println("Dynamic Total: " + (dynamicAdditionScore + dynamicSortScore));
+		System.out.println("Dynamic Total(1st round): " + (dynamicAdditionScore + dynamicSortScore) + "\n");
+		
+		start = System.currentTimeMillis();
+		
+		for (int i=0; i<SIZE; i++) {
+			arr.get().init();
+		}
+		
+		end = System.currentTimeMillis();
+		
+		dynamicAdditionScore = end - start;
+		
+		System.out.println("Dynamic addition(2nd round): " + dynamicAdditionScore);
+		
+		start = System.currentTimeMillis();
+		
+		sorted = arr.sort(true);
+		
+		end = System.currentTimeMillis();
+		
+		dynamicSortScore = end - start;
+		
+		System.out.println("Dynamic sort(2nd round): " + dynamicSortScore);
+		
+		System.out.println("Dynamic Total(2nd round): " + (dynamicAdditionScore + dynamicSortScore) + "\n");
 		
 //		String prev = "";
 //		for (int i=0; i<SIZE; i++) {
