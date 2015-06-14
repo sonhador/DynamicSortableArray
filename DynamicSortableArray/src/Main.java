@@ -75,7 +75,7 @@ public class Main {
 		
 		start = System.currentTimeMillis();
 		
-		DataElem []sorted = arr.sort();
+		DataElem []sorted = arr.sort(true);
 		
 		end = System.currentTimeMillis();
 		

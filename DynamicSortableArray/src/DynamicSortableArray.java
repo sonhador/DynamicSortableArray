@@ -24,6 +24,7 @@
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.IntFunction;
 
@@ -46,11 +47,20 @@ public class DynamicSortableArray<T extends Comparable<T>> {
 		return partitionManager.get(idx);
 	}
 	
-	public T[] sort() {
-		T []totalArr = (T[]) Array.newInstance(objClass, partitionManager.getPartitions().size()*size);
+	public T[] sort(boolean withClear) {
+		int partitionCnt = partitionManager.getPartitions().size();
+		T []totalArr = (T[]) Array.newInstance(objClass, partitionCnt*size);
 		
-		for  (int i=0; i<partitionManager.getPartitions().size(); i++) {
-			System.arraycopy(partitionManager.getPartitions().get(i).getArr(), 0, totalArr, i*size, size);
+		Iterator<Partition<T>> itr = partitionManager.getPartitions().iterator();
+		int idx=0;
+		while (itr.hasNext()) {
+			System.arraycopy(itr.next().getArr(), 0, totalArr, idx*size, size);
+
+			if (withClear) {
+				itr.remove();
+			}
+			
+			idx++;
 		}
 		
 		Arrays.parallelSort(totalArr, new DataElemComparator<T>());
