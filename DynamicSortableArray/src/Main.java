@@ -61,7 +61,8 @@ public class Main {
 		
 		start = System.currentTimeMillis();
 		
-		DynamicSortableArray<DataElem> arr = new DynamicSortableArray<DataElem>(20, DataElem.class);
+		DynamicSortableArray<DataElem> arr = 
+				new DynamicSortableArray<DataElem>(20, DataElem.class, new DataElemComparator<DataElem>());
 		
 		for (int i=0; i<SIZE; i++) {
 			arr.get().init();
@@ -93,13 +94,15 @@ public class Main {
 //			prev = list.get(i).toString();
 //		}
 //		
-//		String prev = "";
-//		for (int i=0; i<SIZE+10; i++) {
-//			if (prev.equals(sorted[i].toString()) == false) {
-//				System.out.println(i + ", " + sorted[i].toString());
-//			}
-//			prev = sorted[i].toString();
-////			System.out.println(i + ", " + sorted[i].toString());
-//		}
+		String prev = "";
+		for (int i=0; i<SIZE+10; i++) {
+			if (prev.equals(sorted[i].toString()) == false) {
+				if (i % (SIZE / 20) == 0) {
+					System.out.println(i + ", " + sorted[i].toString());
+				}
+			}
+			prev = sorted[i].toString();
+//			System.out.println(i + ", " + sorted[i].toString());
+		}
 	}
 }

@@ -24,6 +24,7 @@
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.IntFunction;
@@ -31,11 +32,13 @@ import java.util.function.IntFunction;
 public class DynamicSortableArray<T extends Comparable<T>> {
 	private int size;
 	private Class<T> objClass;
+	private Comparator<T> comparator;
 	private PartitionManager<T> partitionManager;
 	
-	public DynamicSortableArray(int size, Class<T> objClass) throws InstantiationException, IllegalAccessException {
+	public DynamicSortableArray(int size, Class<T> objClass, Comparator<T> comparator) throws InstantiationException, IllegalAccessException {
 		this.size = size;
 		this.objClass = objClass;
+		this.comparator = comparator;
 		partitionManager = new PartitionManager<T>(size, objClass);
 	}
 	
@@ -63,7 +66,7 @@ public class DynamicSortableArray<T extends Comparable<T>> {
 			idx++;
 		}
 		
-		Arrays.parallelSort(totalArr, new DataElemComparator<T>());
+		Arrays.parallelSort(totalArr, comparator);
 		
 		return totalArr;
 	}
